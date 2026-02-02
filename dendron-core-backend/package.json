@@ -1,0 +1,27 @@
+{
+    "name": "dendron-core-backend",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "node --loader ts-node/esm src/server.ts"
+    },
+    "dependencies": {
+        "@fastify/mongodb": "^10.0.0",
+        "@supabase/supabase-js": "^2.93.3",
+        "@types/node-fetch": "^2.6.13",
+        "@types/pg": "^8.16.0",
+        "@types/qs": "^6.14.0",
+        "cheerio": "^1.2.0",
+        "dotenv": "^17.2.3",
+        "fastify": "^4.26.0",
+        "gpt-3-encoder": "^1.1.4",
+        "node-fetch": "^3.3.2",
+        "pg": "^8.18.0",
+        "qs": "^6.14.1"
+    },
+    "devDependencies": {
+        "ts-node": "^10.9.2",
+        "typescript": "^5.4.2"
+    }
+}

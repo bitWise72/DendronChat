@@ -15,7 +15,7 @@ export default function StepDeploy({ step, currentStep, config, onPrev }: Props)
     const [loading, setLoading] = useState(false)
 
     const cdnScript = `<script
-  src="https://cdn.jsdelivr.net/gh/YOUR_ORG/dendron-cdn@v1/dist/dendron.min.js"
+  src="https://cdn.jsdelivr.net/gh/bitWise72/DendronChat@v1.0.0/dendron-cdn/dist/dendron.min.js"
   data-project-ref="${config.projectRef}"
   data-project-id="${config.projectId}">
 </script>`
