@@ -1,0 +1,62 @@
+.dendron-widget {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 2147483647;
+}
+
+.dendron-button {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+    display: grid;
+    place-items: center;
+    background: #111827;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.dendron-panel {
+    width: 360px;
+    max-height: 580px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.dendron-header {
+    padding: 12px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dendron-body {
+    padding: 12px;
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.dendron-input {
+    display: flex;
+    gap: 8px;
+    padding: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.dendron-input input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+}
