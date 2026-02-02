@@ -1,0 +1,159 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #0f172a;
+    color: #f8fafc;
+    min-height: 100vh;
+}
+
+.app {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: #94a3b8;
+    margin-bottom: 48px;
+}
+
+.step {
+    background: #1e293b;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.step h2 {
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.step-number {
+    background: #3b82f6;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.step.completed .step-number {
+    background: #22c55e;
+}
+
+.step-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.875rem;
+    color: #94a3b8;
+}
+
+input,
+textarea,
+select {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    padding: 12px;
+    color: #f8fafc;
+    font-size: 1rem;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+button {
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+button:hover {
+    background: #2563eb;
+}
+
+button:disabled {
+    background: #475569;
+    cursor: not-allowed;
+}
+
+.code-block {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 16px;
+    font-family: monospace;
+    font-size: 0.875rem;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.row {
+    display: flex;
+    gap: 16px;
+}
+
+.row>* {
+    flex: 1;
+}
+
+.status {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.875rem;
+}
+
+.status.success {
+    background: #166534;
+    color: #bbf7d0;
+}
+
+.status.error {
+    background: #991b1b;
+    color: #fecaca;
+}
+
+.preview-box {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 16px;
+    min-height: 100px;
+}
