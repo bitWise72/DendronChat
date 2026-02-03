@@ -1,16 +1,16 @@
 class DendronWidget extends HTMLElement {
-    shadow: ShadowRoot;
-    config: any = {};
-    panelOpen = false;
+  shadow: ShadowRoot;
+  config: any = {};
+  panelOpen = false;
 
-    constructor() {
-        super();
-        this.shadow = this.attachShadow({ mode: "closed" });
-        this.render();
-    }
+  constructor() {
+    super();
+    this.shadow = this.attachShadow({ mode: "closed" });
+    this.render();
+  }
 
-    render() {
-        this.shadow.innerHTML = `
+  render() {
+    this.shadow.innerHTML = `
       <style>
         .dendron-widget {
           font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
@@ -87,24 +87,29 @@ class DendronWidget extends HTMLElement {
         .msg-assistant { text-align: left; color: #1e40af; }
       </style>
       <div class="dendron-widget">
-        <button class="dendron-button" id="toggle">💬</button>
+        <button class="dendron-button" id="toggle">
+            ${this.config.mascotUrl
+        ? `<img src="${this.config.mascotUrl}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />`
+        : "💬"
+      }
+        </button>
       </div>
     `;
 
-        this.shadow.getElementById("toggle")!.onclick = () => this.togglePanel();
+    this.shadow.getElementById("toggle")!.onclick = () => this.togglePanel();
+  }
+
+  togglePanel() {
+    this.panelOpen = !this.panelOpen;
+    const existing = this.shadow.querySelector(".dendron-panel");
+    if (existing) {
+      existing.remove();
+      return;
     }
 
-    togglePanel() {
-        this.panelOpen = !this.panelOpen;
-        const existing = this.shadow.querySelector(".dendron-panel");
-        if (existing) {
-            existing.remove();
-            return;
-        }
-
-        const panel = document.createElement("div");
-        panel.className = "dendron-panel";
-        panel.innerHTML = `
+    const panel = document.createElement("div");
+    panel.className = "dendron-panel";
+    panel.innerHTML = `
       <div class="dendron-header">
         <span>${this.config.name || "Assistant"}</span>
       </div>
@@ -115,49 +120,49 @@ class DendronWidget extends HTMLElement {
       </div>
     `;
 
-        this.shadow.querySelector(".dendron-widget")!.appendChild(panel);
+    this.shadow.querySelector(".dendron-widget")!.appendChild(panel);
 
-        const input = this.shadow.getElementById("input-field") as HTMLInputElement;
-        const sendBtn = this.shadow.getElementById("send-btn") as HTMLButtonElement;
-        const messagesEl = this.shadow.getElementById("messages") as HTMLElement;
+    const input = this.shadow.getElementById("input-field") as HTMLInputElement;
+    const sendBtn = this.shadow.getElementById("send-btn") as HTMLButtonElement;
+    const messagesEl = this.shadow.getElementById("messages") as HTMLElement;
 
-        sendBtn.onclick = () => this.sendMessage(input.value, messagesEl, input);
-        input.onkeydown = (e) => {
-            if (e.key === "Enter") this.sendMessage(input.value, messagesEl, input);
-        };
+    sendBtn.onclick = () => this.sendMessage(input.value, messagesEl, input);
+    input.onkeydown = (e) => {
+      if (e.key === "Enter") this.sendMessage(input.value, messagesEl, input);
+    };
+  }
+
+  async sendMessage(text: string, messagesEl: HTMLElement, input: HTMLInputElement) {
+    if (!text.trim()) return;
+
+    const userMsg = document.createElement("div");
+    userMsg.className = "msg-user";
+    userMsg.textContent = text;
+    messagesEl.appendChild(userMsg);
+    input.value = "";
+
+    const assistantMsg = document.createElement("div");
+    assistantMsg.className = "msg-assistant";
+    assistantMsg.textContent = "...";
+    messagesEl.appendChild(assistantMsg);
+
+    try {
+      const resp = await fetch(this.config.chatEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ projectId: this.config.projectId, message: text })
+      });
+      if (resp.ok) {
+        const json = await resp.json();
+        assistantMsg.textContent = json.answer || "(no response)";
+      } else {
+        assistantMsg.textContent = "(error)";
+      }
+    } catch (e) {
+      assistantMsg.textContent = "(network error)";
     }
-
-    async sendMessage(text: string, messagesEl: HTMLElement, input: HTMLInputElement) {
-        if (!text.trim()) return;
-
-        const userMsg = document.createElement("div");
-        userMsg.className = "msg-user";
-        userMsg.textContent = text;
-        messagesEl.appendChild(userMsg);
-        input.value = "";
-
-        const assistantMsg = document.createElement("div");
-        assistantMsg.className = "msg-assistant";
-        assistantMsg.textContent = "...";
-        messagesEl.appendChild(assistantMsg);
-
-        try {
-            const resp = await fetch(this.config.chatEndpoint, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ projectId: this.config.projectId, message: text })
-            });
-            if (resp.ok) {
-                const json = await resp.json();
-                assistantMsg.textContent = json.answer || "(no response)";
-            } else {
-                assistantMsg.textContent = "(error)";
-            }
-        } catch (e) {
-            assistantMsg.textContent = "(network error)";
-        }
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-    }
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
 }
 
 customElements.define("dendron-widget", DendronWidget);

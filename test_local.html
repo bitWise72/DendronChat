@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dendron Local Test</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: #f0fdf4;
+            /* Light green for local */
+            color: #0f172a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: #15803d;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Dendron Local Test</h1>
+    <p>This uses the locally built script (dendron-cdn/dist/dendron.min.js).</p>
+    <p>The chat bubble should appear with the bot icon below.</p>
+
+    <script src="./dendron-cdn/dist/dendron.min.js" data-project-ref="local-test" data-project-id="my-assistant"
+        data-mascot-url="https://api.iconify.design/lucide:bot.svg">
+        </script>
+</body>
+
+</html>

@@ -2,86 +2,22 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dendron - Setup Wizard</title>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dendron - Setup Wizard</title>
 </head>
 
 <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
 
-    <!-- TEST EMBED: Local CDN widget to verify chat bubble (comment out later) -->
-    <script>
-        // Inline test: Simulate the CDN widget behavior locally
-        window.addEventListener('DOMContentLoaded', () => {
-            const root = document.createElement("div");
-            root.id = "dendron-test-widget";
-            document.body.appendChild(root);
-
-            root.innerHTML = `
-          <div style="
-            position:fixed;
-            bottom:20px;
-            right:20px;
-            z-index:9999;
-          ">
-            <button id="dendron-toggle" style="
-              width:56px;
-              height:56px;
-              border-radius:50%;
-              background:#111827;
-              color:white;
-              border:none;
-              cursor:pointer;
-              font-size:20px;
-              box-shadow: 0 6px 18px rgba(0,0,0,0.2);
-            ">💬</button>
-            <div id="dendron-panel" style="
-              display:none;
-              position:absolute;
-              bottom:70px;
-              right:0;
-              width:320px;
-              background:#1e293b;
-              border-radius:12px;
-              padding:12px;
-              box-shadow: 0 12px 48px rgba(0,0,0,0.3);
-            ">
-              <div style="color:#94a3b8;margin-bottom:8px;font-size:14px;">Test Widget</div>
-              <div id="messages" style="height:150px;overflow:auto;color:white;font-size:14px;"></div>
-              <input id="test-input" placeholder="Ask..." style="
-                width:100%;
-                padding:10px;
-                border-radius:8px;
-                border:1px solid #334155;
-                background:#0f172a;
-                color:white;
-                margin-top:8px;
-              "/>
-            </div>
-          </div>
-        `;
-
-            const toggle = document.getElementById('dendron-toggle');
-            const panel = document.getElementById('dendron-panel');
-            toggle.onclick = () => {
-                panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-            };
-
-            const input = document.getElementById('test-input');
-            const messages = document.getElementById('messages');
-            input.onkeydown = (e) => {
-                if (e.key === 'Enter' && input.value.trim()) {
-                    messages.innerHTML += '<div style="margin:4px 0;color:#f8fafc;"><b>You:</b> ' + input.value + '</div>';
-                    messages.innerHTML += '<div style="margin:4px 0;color:#3b82f6;"><b>Bot:</b> (Widget test - connect Supabase to chat)</div>';
-                    input.value = '';
-                    messages.scrollTop = messages.scrollHeight;
-                }
-            };
-        });
-    </script>
+  <!-- Dendron Chat Assistant (Live Test) -->
+  <script
+  src="https://cdn.jsdelivr.net/gh/bitWise72/DendronChat@v1.0.0/dendron-cdn/dist/dendron.min.js"
+  data-project-ref="mock-ref-hf7n0d"
+  data-project-id="my-assistant">
+</script>
 </body>
 
 </html>

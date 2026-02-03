@@ -17,6 +17,16 @@ export type DendronConfig = {
     mascotUrl: string
 }
 
+export type StepProps = {
+    step: number
+    currentStep: number
+    config: DendronConfig
+    updateConfig: (partial: Partial<DendronConfig>) => void
+    onNext: () => void
+    onPrev: () => void
+    direction?: number
+}
+
 export const defaultConfig: DendronConfig = {
     projectId: "",
     projectRef: "",
