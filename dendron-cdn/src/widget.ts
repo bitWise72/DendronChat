@@ -26,7 +26,7 @@ class DendronWidget extends HTMLElement {
           box-shadow: 0 6px 18px rgba(0,0,0,0.16);
           display: grid;
           place-items: center;
-          background: #111827;
+          background: ${this.config.themeColor || "#111827"};
           color: white;
           border: none;
           cursor: pointer;

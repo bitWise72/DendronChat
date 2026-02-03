@@ -21,7 +21,7 @@ export default function StepDeploy({ config, direction = 0 }: Props) {
     const [copied, setCopied] = useState(false)
 
     const cdnScript = `<script
-  src="https://cdn.jsdelivr.net/gh/bitWise72/DendronChat@v1.0.0/dendron-cdn/dist/dendron.min.js"
+  src="https://cdn.jsdelivr.net/gh/bitWise72/DendronChat@v1.0.1/dendron-cdn/dist/dendron.min.js"
   data-project-ref="${config.projectRef || "PASTE_REF_HERE"}"
   data-project-id="${config.projectId}">
 </script>`

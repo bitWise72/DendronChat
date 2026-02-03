@@ -48,15 +48,34 @@ export default function ProvisionPage() {
                 setStatus("Finalizing...")
 
                 // Save result
-                localStorage.setItem("dendron_install_config", JSON.stringify({
+                const updatedConfig = {
                     ...config,
                     projectRef: data.projectRef,
                     supabaseUrl: data.supabaseUrl,
                     anonKey: data.anonKey
-                }))
+                }
+                localStorage.setItem("dendron_install_config", JSON.stringify(updatedConfig))
+
+                // TRIGGER INGESTION
+                if (updatedConfig.dbConfig?.type) {
+                    setStatus("Ingesting knowledge from your database... (This may take a minute)")
+                    await fetch("/api/ingest", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            dbConfig: updatedConfig.dbConfig,
+                            llmConfig: {
+                                apiKey: updatedConfig.llmApiKey,
+                                provider: updatedConfig.llmProvider
+                            },
+                            projectRef: data.projectRef,
+                            anonKey: data.anonKey
+                        })
+                    })
+                }
 
                 setDone(true)
-                setTimeout(() => { window.location.href = "/?step=5" }, 1500)
+                setTimeout(() => { window.location.href = "/?step=6" }, 1500) // Go to Deploy step directly
             } catch (e: any) {
                 setError(e.message)
             }

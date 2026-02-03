@@ -21,7 +21,7 @@ window.Dendron = {
         const scriptConfig = getScriptConfig();
         const projectId = opts?.projectId || scriptConfig?.projectId;
         const projectRef = opts?.projectRef || scriptConfig?.projectRef;
-        const mascotUrl = opts?.mascotUrl || scriptConfig?.mascotUrl;
+        // initial mascot/theme might be undefined until fetched
 
         if (!projectId || !projectRef) {
             console.error("Dendron: projectId and projectRef are required.");
@@ -30,13 +30,31 @@ window.Dendron = {
 
         const endpointUrl = opts?.endpointUrl || `https://${projectRef}.functions.supabase.co/chat`;
 
+        // FETCH REMOTE CONFIG
+        let remoteConfig: any = {};
+        try {
+            const res = await fetch(`${endpointUrl}?project_id=${projectId}`);
+            if (res.ok) {
+                remoteConfig = await res.json();
+            }
+        } catch (e) {
+            console.warn("Dendron: Failed to load remote config", e);
+        }
+
+        // Merge: Opts > Script > Remote
+        const mascotUrl = opts?.mascotUrl || scriptConfig?.mascotUrl || remoteConfig.mascot_url;
+        const themeColor = remoteConfig.theme_color || "#111827";
+        const name = remoteConfig.assistant_name || "Assistant";
+
         const root = document.createElement("div");
         document.body.appendChild(root);
         const w = document.createElement("dendron-widget");
         (w as any).config = {
             projectId: projectId,
             chatEndpoint: endpointUrl,
-            mascotUrl: mascotUrl
+            mascotUrl: mascotUrl,
+            themeColor: themeColor,
+            name: name
         };
         root.appendChild(w);
     }

@@ -6,6 +6,7 @@ import { DendronConfig } from "@/lib/state"
 import StepIdentity from "./StepIdentity"
 import StepBehavior from "./StepBehavior"
 import StepKnowledge from "./StepKnowledge"
+import StepBrain from "./StepBrain"
 import StepSupabase from "./StepSupabase"
 import StepDeploy from "./StepDeploy"
 
@@ -23,7 +24,7 @@ export default function Wizard({ config, updateConfig }: Props) {
         const step = params.get("step")
         if (step) {
             const stepNum = parseInt(step)
-            if (stepNum >= 1 && stepNum <= 5) {
+            if (stepNum >= 1 && stepNum <= 6) {
                 setCurrentStep(stepNum)
                 // Clean up URL
                 window.history.replaceState({}, '', '/')
@@ -33,7 +34,7 @@ export default function Wizard({ config, updateConfig }: Props) {
 
     const nextStep = () => {
         setDirection(1)
-        setCurrentStep((s) => Math.min(s + 1, 5))
+        setCurrentStep((s) => Math.min(s + 1, 6))
     }
 
     const prevStep = () => {
@@ -45,8 +46,9 @@ export default function Wizard({ config, updateConfig }: Props) {
         { id: 1, title: "Identity", component: StepIdentity },
         { id: 2, title: "Behavior", component: StepBehavior },
         { id: 3, title: "Knowledge", component: StepKnowledge },
-        { id: 4, title: "Supabase", component: StepSupabase },
-        { id: 5, title: "Deploy", component: StepDeploy },
+        { id: 4, title: "Brain", component: StepBrain },
+        { id: 5, title: "Supabase", component: StepSupabase },
+        { id: 6, title: "Deploy", component: StepDeploy },
     ]
 
     return (
@@ -56,7 +58,7 @@ export default function Wizard({ config, updateConfig }: Props) {
                 <div className="absolute top-1/2 left-0 w-full h-0.5 bg-slate-800 -z-10 rounded-full" />
                 <div
                     className="absolute top-1/2 left-0 h-0.5 bg-gradient-to-r from-sky-500 to-violet-500 -z-10 rounded-full transition-all duration-500 ease-out"
-                    style={{ width: `${((currentStep - 1) / 4) * 100}%` }}
+                    style={{ width: `${((currentStep - 1) / 5) * 100}%` }}
                 />
                 <div className="flex justify-between">
                     {steps.map((s) => {
