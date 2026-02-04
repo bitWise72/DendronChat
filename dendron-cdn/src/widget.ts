@@ -135,6 +135,13 @@ class DendronWidget extends HTMLElement {
   async sendMessage(text: string, messagesEl: HTMLElement, input: HTMLInputElement) {
     if (!text.trim()) return;
 
+    // Session Management
+    let sessionId = localStorage.getItem("dendron_session_id");
+    if (!sessionId) {
+      sessionId = crypto.randomUUID();
+      localStorage.setItem("dendron_session_id", sessionId);
+    }
+
     const userMsg = document.createElement("div");
     userMsg.className = "msg-user";
     userMsg.textContent = text;
@@ -150,13 +157,17 @@ class DendronWidget extends HTMLElement {
       const resp = await fetch(this.config.chatEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ projectId: this.config.projectId, message: text })
+        body: JSON.stringify({
+          projectId: this.config.projectId,
+          message: text,
+          sessionId: sessionId
+        })
       });
       if (resp.ok) {
         const json = await resp.json();
         assistantMsg.textContent = json.answer || "(no response)";
       } else {
-        assistantMsg.textContent = "(error)";
+        assistantMsg.textContent = "Error: " + resp.statusText;
       }
     } catch (e) {
       assistantMsg.textContent = "(network error)";

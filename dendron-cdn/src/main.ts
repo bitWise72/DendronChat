@@ -28,7 +28,7 @@ window.Dendron = {
             return;
         }
 
-        const endpointUrl = opts?.endpointUrl || `https://${projectRef}.functions.supabase.co/chat`;
+        const endpointUrl = opts?.endpointUrl || `https://${projectRef}.supabase.co/functions/v1/chat`;
 
         // FETCH REMOTE CONFIG
         let remoteConfig: any = {};
