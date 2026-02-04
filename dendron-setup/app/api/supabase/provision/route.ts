@@ -238,12 +238,24 @@ export async function POST(request: Request) {
     // Get Project
     const projectsRes = await fetch("https://api.supabase.com/v1/projects", { headers: { "Authorization": `Bearer ${accessToken}` } })
     const projects = await projectsRes.json()
+    if (!Array.isArray(projects)) {
+      console.error("Supabase Projects Error:", projects)
+      // If 401/403, might be token issue.
+      return NextResponse.json({ error: "Failed to list Supabase projects. " + (projects.message || JSON.stringify(projects)) }, { status: 500 })
+    }
+
     let project = projects.find((p: any) => p.name === "dendron-chat") || projects[0]
     if (!project) return NextResponse.json({ error: "No Project Found. Please create 'dendron-chat' in Supabase." }, { status: 404 })
 
     // Get Keys
     const keysRes = await fetch(`https://api.supabase.com/v1/projects/${project.id}/api-keys`, { headers: { "Authorization": `Bearer ${accessToken}` } })
     const keys = await keysRes.json()
+
+    if (!Array.isArray(keys)) {
+      console.error("Supabase Keys Error:", keys)
+      return NextResponse.json({ error: "Failed to fetch Project Keys. " + (keys.message || JSON.stringify(keys)) }, { status: 500 })
+    }
+
     const sbUrl = `https://${project.ref}.supabase.co`
     const sbServiceKey = keys.find((k: any) => k.name === "service_role")?.api_key
     const sbAnonKey = keys.find((k: any) => k.name === "anon")?.api_key
