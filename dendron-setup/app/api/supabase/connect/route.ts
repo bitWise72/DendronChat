@@ -15,6 +15,7 @@ export async function GET() {
     }
 
     const scope = "all"
+    // Note: If 'all' fails, use: "organizations:read projects:read projects:write database:write functions:write"
 
     const supabaseAuthUrl = new URL("https://api.supabase.com/v1/oauth/authorize")
     supabaseAuthUrl.searchParams.append("client_id", client_id)

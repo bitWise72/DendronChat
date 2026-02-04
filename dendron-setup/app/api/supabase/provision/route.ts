@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server"
 import { createClient } from "@supabase/supabase-js"
 import JSZip from "jszip"
-// @ts-ignore
-import { OpenAIEmbeddings } from "@langchain/openai"
-// @ts-ignore
-import { RecursiveCharacterTextSplitter } from "langchain/text_splitter"
+// import { OpenAIEmbeddings } from "@langchain/openai"
+// import { RecursiveCharacterTextSplitter } from "langchain/text_splitter"
 
 // --- CONSTANTS ---
 const SQL_SCHEMA = `
@@ -294,6 +292,11 @@ export async function POST(request: Request) {
     })
 
     // --- DEPLOYMENT ---
+    // AFTER SQL & Secret Setup:
+    // Trigger Ingestion if URL provided
+    // if (config.websiteUrl && openAiKey) {
+    // await ingestWebsite(config.websiteUrl, config.projectId, openAiKey, supabase)
+    // }
     try {
       const openAiKey = config.llmConfig?.apiKey
       if (openAiKey) {
@@ -310,6 +313,10 @@ export async function POST(request: Request) {
       console.error("Function Deployment Failed:", e)
     }
 
+    // Ingestion Helper
+    // async function ingestWebsite(url: string, projectId: string, apiKey: string, supabase: any) {
+    // ... Implementation commented out for stability ...
+    // }
     return NextResponse.json({
       projectRef: project.ref,
       supabaseUrl: sbUrl,
