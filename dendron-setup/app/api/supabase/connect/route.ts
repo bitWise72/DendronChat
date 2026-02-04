@@ -14,14 +14,7 @@ export async function GET() {
         }, { status: 500 })
     }
 
-    const scope = [
-        "organizations.read",
-        "projects.read",
-        "projects.create",
-        "projects.write",
-        "database.write",
-        "functions.write"
-    ].join(" ")
+    const scope = "all"
 
     const supabaseAuthUrl = new URL("https://api.supabase.com/v1/oauth/authorize")
     supabaseAuthUrl.searchParams.append("client_id", client_id)
