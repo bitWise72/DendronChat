@@ -14,8 +14,8 @@ export async function GET() {
         }, { status: 500 })
     }
 
-    const scope = "all"
-    // Note: If 'all' fails, use: "organizations:read projects:read projects:write database:write functions:write"
+    const scope = "projects:read projects:write functions:read functions:write database:read database:write organizations:read"
+    // Note: Error message asked for 'projects:read', so we must use colons. 'all' might be restricted.
 
     const supabaseAuthUrl = new URL("https://api.supabase.com/v1/oauth/authorize")
     supabaseAuthUrl.searchParams.append("client_id", client_id)
