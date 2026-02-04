@@ -9,9 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@langchain/core": "^1.1.19",
+    "@langchain/openai": "^1.2.4",
     "@supabase/supabase-js": "^2.94.0",
+    "@types/jszip": "^3.4.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.5.4",
+    "jszip": "^3.10.1",
+    "langchain": "^1.2.17",
     "lucide-react": "^0.439.0",
     "mongodb": "^7.0.0",
     "next": "14.2.11",
