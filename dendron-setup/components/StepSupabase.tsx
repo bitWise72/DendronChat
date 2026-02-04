@@ -81,11 +81,11 @@ export default function StepSupabase({ config, updateConfig, onNext, onPrev, dir
             updateConfig({
                 projectRef: data.projectRef,
                 supabaseUrl: url,
-                anonKey: key, // Storing Service Key as Anon Key is risky for client side... 
-                // User really should provide Anon Key for the frontend.
-                // Let's add an input for Anon Key.
+                anonKey: key,
+                _tempFunctionCode: data.functionCode // Store to display in UI
             })
-            onNext()
+            // Don't auto next
+            // onNext()
 
         } catch (e: any) {
             setError(e.message)
@@ -180,6 +180,45 @@ export default function StepSupabase({ config, updateConfig, onNext, onPrev, dir
                         >
                             {loading ? "Provisioning..." : "Connect & Provision"}
                         </button>
+                    </div>
+                )}
+
+                {/* Manual Function Deployment Modal/Step */}
+                {mode === "manual" && !error && !loading && config.anonKey && (
+                    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+                        <div className="bg-[#0f172a] border border-slate-700 rounded-2xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto space-y-4">
+                            <div className="flex items-center gap-3 text-emerald-400 mb-2">
+                                <Database size={24} />
+                                <h3 className="text-xl font-bold text-white">Database Configured!</h3>
+                            </div>
+                            <div className="bg-amber-500/10 border-l-4 border-amber-500 p-4 text-amber-200 text-sm">
+                                <strong>One last step:</strong> Since we are in Manual Mode, you need to create the Edge Function yourself.
+                            </div>
+                            <ol className="list-decimal list-inside space-y-2 text-slate-300 text-sm">
+                                <li>Go to your Supabase Dashboard &gt; <strong>Edge Functions</strong>.</li>
+                                <li>Create a new function named <code>chat</code>.</li>
+                                <li>Paste the code below into the editor and Save/Deploy.</li>
+                            </ol>
+                            <div className="relative group">
+                                <pre className="bg-slate-900 border border-slate-700 rounded-xl p-4 text-xs font-mono text-slate-400 overflow-x-auto max-h-60 selection:bg-emerald-500/30">
+                                    {config._tempFunctionCode || "// Code loading..."}
+                                </pre>
+                                <button
+                                    onClick={() => navigator.clipboard.writeText(config._tempFunctionCode || "")}
+                                    className="absolute top-2 right-2 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-white text-xs rounded-lg transition-colors border border-slate-600"
+                                >
+                                    Copy Code
+                                </button>
+                            </div>
+                            <div className="flex justify-end pt-4">
+                                <button
+                                    onClick={onNext}
+                                    className="px-6 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-black font-bold transition-colors"
+                                >
+                                    I have deployed the function →
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 )}
 

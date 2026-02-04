@@ -1,28 +1,41 @@
 export type LLMProvider = "openai" | "gemini" | "anthropic"
 
 export type DendronConfig = {
+    // Identity
     assistantName: string
-    projectId: string
+    mascotUrl: string // URL or Lucide Icon Name
     themeColor: string
-    mascotUrl: string
+
+    // Behavior
     systemPrompt: string
     welcomeMessage: string
-    websiteUrl: string
-    // Provisioning results
-    projectRef?: string
-    supabaseUrl?: string
-    anonKey?: string
+
+    // Knowledge
+    websiteUrl?: string
     dbConfig?: {
         type: "postgres" | "mongodb"
-        connectionString: string
-        selectedSchema: any
+        connectionString?: string
+        selectedSchema?: any
     }
-    // New fields from defaultConfig
-    supabaseAnonKey?: string
-    llmProvider?: LLMProvider
-    llmApiKey?: string
+
+    // Brain (LLM)
+    llmProvider: "openai" | "anthropic" | "gemini"
+    llmApiKey: string
+    llmConfig?: any
+
+    // Supabase
+    projectRef?: string
+    projectId?: string // internal ID
+    supabaseUrl?: string
+    anonKey?: string
+    supabaseAnonKey?: string // Alias for anonKey sometimes used
+
+    // LLM Extras
     embeddingModel?: string
     chatModel?: string
+
+    // Temp
+    _tempFunctionCode?: string
 }
 
 export const defaultConfig: DendronConfig = {

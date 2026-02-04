@@ -212,7 +212,8 @@ export async function POST(request: Request) {
       return NextResponse.json({
         projectRef: supabaseUrl.replace("https://", "").split(".")[0],
         supabaseUrl,
-        anonKey: serviceKey
+        anonKey: serviceKey,
+        functionCode: CHAT_FUNCTION_CODE
       })
     }
 
